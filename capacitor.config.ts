@@ -5,7 +5,12 @@ const config: CapacitorConfig = {
   appName: 'IGV',
   webDir: 'dist',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    cleartext: true,
+    allowNavigation: ['*']
+  },
+  android: {
+    allowMixedContent: true
   }
 };
 
