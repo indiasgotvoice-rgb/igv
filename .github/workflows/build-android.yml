@@ -14,6 +14,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -29,12 +33,24 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Verify environment variables
+      run: |
+        echo "Checking environment variables..."
+        if [ -z "$VITE_SUPABASE_URL" ]; then
+          echo "ERROR: VITE_SUPABASE_URL is not set!"
+          exit 1
+        fi
+        if [ -z "$VITE_SUPABASE_ANON_KEY" ]; then
+          echo "ERROR: VITE_SUPABASE_ANON_KEY is not set!"
+          exit 1
+        fi
+        echo "Environment variables are set correctly"
+
     - name: Install dependencies
       run: npm install
 
     - name: Install Capacitor
-      run: |
-        npm install @capacitor/core @capacitor/cli @capacitor/android
+      run: npm install @capacitor/core @capacitor/cli @capacitor/android
 
     - name: Build React app
       run: npm run build
