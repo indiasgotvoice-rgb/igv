@@ -33,10 +33,6 @@ jobs:
       run: |
         npm install @capacitor/core @capacitor/cli @capacitor/android
 
-    - name: Initialize Capacitor
-      run: |
-        npx cap init "IGV" "com.igv.app" --web-dir=dist
-
     - name: Build React app
       run: npm run build
 
